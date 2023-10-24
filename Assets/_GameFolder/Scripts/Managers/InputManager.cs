@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using JellyShiftClone.Controllers;
+using System;
 
 namespace JellyShiftClone.Managers
 {
@@ -25,10 +26,10 @@ namespace JellyShiftClone.Managers
 			{
 				Instance = this;
 			}
-			
+
 		}
 
-		public void Initialize(Player player )
+		public void Initialize(Player player)
 		{
 			_player = player;
 			_isDragging = false;
@@ -59,26 +60,22 @@ namespace JellyShiftClone.Managers
 			float _lastTouchY = Input.mousePosition.y;
 			float deltaY = _lastTouchY - _firstTouchY;
 
-			if (deltaY > 0)
+			if (deltaY != 0)
 			{
-
-				_player.ChangeScale(true);
+				_player.ChangeScale();
 			}
-			else if (deltaY < 0)
-			{
-
-				_player.ChangeScale(false);
-			}
+		
 
 			_firstTouchY = _lastTouchY;
 		}
+
 
 		public void OnScreenUp(PointerEventData eventData)
 		{
 			_isDragging = false;
 		}
 
-		
+
 	}
 }
 

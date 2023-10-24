@@ -8,7 +8,7 @@ namespace JellyShiftClone.Controllers
 	public class PlayerController : MonoBehaviour
 	{
 		public float forwardSpeed;
-		private bool _canMove = true;
+		private bool _canMove;
 
 		public void Initialize()
 		{
@@ -25,9 +25,10 @@ namespace JellyShiftClone.Controllers
 			switch (GameManager.Instance.GameState)
 			{
 				case GameState.Start:
-					_canMove = true;
+					
 					break;
 				case GameState.Playing:
+					_canMove = true;
 					break;
 				case GameState.End:
 					_canMove = false;
