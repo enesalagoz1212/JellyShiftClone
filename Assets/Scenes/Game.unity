@@ -437,7 +437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: -0, y: -0.061048605, z: -0, w: 0.99813485}
-  m_LocalPosition: {x: 8.7, y: 14.2, z: -25.6}
+  m_LocalPosition: {x: 6.794, y: 10.9, z: -19.509}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -490,8 +490,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1366806202}
-  offset: {x: 8.7, y: 14.2, z: -25.6}
-  lerpValue: 4
+  offset: {x: 6.794, y: 10.9, z: -19.37}
+  lerpValue: 0.1
 --- !u!1 &349144275
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,9 +632,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384885881}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.2499, y: 0.5, z: 14.12}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 1, z: 16.96}
+  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1366806202}
   m_RootOrder: 0
@@ -652,9 +652,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpValue: 4
-  minX: 2
+  minX: 1
   maxX: 10
-  minY: 2
+  minY: 1
   maxY: 10
 --- !u!54 &384885887
 Rigidbody:

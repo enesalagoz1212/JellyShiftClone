@@ -36,11 +36,11 @@ namespace JellyShiftClone.Managers
 		}
 		public void OnScreenTouch(PointerEventData eventData)
 		{
+			Debug.Log("OnScreenTouch 1");
 			if (!isInputEnabled)
 			{
 				return;
 			}
-
 			_firstTouchY = Input.mousePosition.y;
 			_isDragging = true;
 
@@ -48,32 +48,33 @@ namespace JellyShiftClone.Managers
 
 		public void OnScreenDrag(PointerEventData eventData)
 		{
+			Debug.Log("OnScreenDrag 1");
 			if (!isInputEnabled || !_isDragging)
 			{
 				return;
 			}
-
 			if (GameManager.Instance.GameState != GameState.Playing)
 			{
 				return;
 			}
 			float _lastTouchY = Input.mousePosition.y;
-			float deltaY = _lastTouchY - _firstTouchY;
-
-			if (deltaY != 0)
-			{
-				_player.ChangeScale();
-			}
-		
+			float deltaY = _firstTouchY - _lastTouchY;
 
 			_firstTouchY = _lastTouchY;
+			_player.ChangeScale(deltaY);
 		}
 
 
 		public void OnScreenUp(PointerEventData eventData)
 		{
+			Debug.Log("OnScreenUp");
 			_isDragging = false;
 		}
+
+	
+
+		
+
 
 
 	}

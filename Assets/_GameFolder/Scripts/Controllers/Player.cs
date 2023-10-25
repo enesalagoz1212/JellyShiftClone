@@ -9,7 +9,6 @@ namespace JellyShiftClone.Controllers
 	public class Player : MonoBehaviour
 	{
 		private Camera _camera;
-		private Rigidbody _rigitbody;
 		private Vector3 _initialScale;
 
 		public float lerpValue;
@@ -32,7 +31,11 @@ namespace JellyShiftClone.Controllers
 		private void Start()
 		{
 			_camera = Camera.main;
-			_rigitbody = GetComponent<Rigidbody>();
+
+			if (_camera == null)
+			{
+				Debug.LogError("Camera null");
+			}
 		}
 
 		private void OnGameStart()
@@ -40,26 +43,24 @@ namespace JellyShiftClone.Controllers
 			_initialScale = transform.localScale;
 		}
 
-		public void ChangeScale()
+		public void ChangeScale(float deltaY)
 		{
 			if (InputManager.Instance.isInputEnabled)
-			{
-				Vector3 mousePos = Input.mousePosition;
-				mousePos.z = 10;
+			{	
+				float newYScale = transform.localScale.y + deltaY * 0.01f;
+				float newXScale = transform.localScale.x - deltaY * 0.01f;
 
-				Vector3 moveVec = _camera.ScreenToWorldPoint(mousePos);
-				float x = transform.localScale.x;
-				moveVec.z = transform.localScale.z;
-				moveVec.y *= 2f;
-				moveVec.y = Mathf.Clamp(moveVec.y, minY, maxY);
-				x = 10 / moveVec.y;
+				newXScale = transform.localScale.x + deltaY * 0.01f;
+				newYScale = transform.localScale.y - deltaY * 0.01f;
 
-				moveVec.x = Mathf.Clamp(x, minX, maxX);
+				newYScale = Mathf.Clamp(newYScale, minY, maxY);
+				newXScale = Mathf.Clamp(newXScale, minX, maxX);
 
-				transform.localScale = Vector3.Lerp(transform.localScale, moveVec, lerpValue);
+				transform.localScale = new Vector3(newXScale, newYScale, transform.localScale.z);
 			}
-
 		}
+
+
 	}
 
 }
