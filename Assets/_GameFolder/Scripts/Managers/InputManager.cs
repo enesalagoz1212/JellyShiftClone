@@ -36,7 +36,6 @@ namespace JellyShiftClone.Managers
 		}
 		public void OnScreenTouch(PointerEventData eventData)
 		{
-			Debug.Log("OnScreenTouch 1");
 			if (!isInputEnabled)
 			{
 				return;
@@ -48,7 +47,6 @@ namespace JellyShiftClone.Managers
 
 		public void OnScreenDrag(PointerEventData eventData)
 		{
-			Debug.Log("OnScreenDrag 1");
 			if (!isInputEnabled || !_isDragging)
 			{
 				return;
@@ -67,7 +65,6 @@ namespace JellyShiftClone.Managers
 
 		public void OnScreenUp(PointerEventData eventData)
 		{
-			Debug.Log("OnScreenUp");
 			_isDragging = false;
 		}
 

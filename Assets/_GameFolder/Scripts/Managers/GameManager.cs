@@ -68,7 +68,8 @@ namespace JellyShiftClone.Managers
 
 		public void EndGame(bool isSuccessful)
 		{
-
+			ChangeState(GameState.End);
+			
 		}
 
 		public void ChangeState(GameState gameState, bool isSuccessful = false)
@@ -84,6 +85,14 @@ namespace JellyShiftClone.Managers
 				case GameState.Playing:
 					break;
 				case GameState.End:
+					if (isSuccessful)
+					{
+						PlayerPrefsManager.CurrentLevel++;
+					}
+					else
+					{
+
+					}
 					break;
 				case GameState.Reset:
 					break;

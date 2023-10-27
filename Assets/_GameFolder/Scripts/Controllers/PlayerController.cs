@@ -50,6 +50,9 @@ namespace JellyShiftClone.Controllers
 		{
 			transform.position += transform.forward * forwardSpeed * Time.deltaTime;
 		}
+
+		
+
 	}
 }
 
