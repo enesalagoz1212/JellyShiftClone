@@ -9,7 +9,8 @@ namespace JellyShiftClone.Controllers
     {
 		private void Start()
 		{
-			Debug.Log("start calisti");
+			Debug.Log("finish start " +
+				"calisti");
 		}
 
 		private void OnTriggerEnter(Collider other)
@@ -17,7 +18,6 @@ namespace JellyShiftClone.Controllers
 			if (other.CompareTag("Player"))
 			{
 				GameManager.Instance.EndGame(true);
-				Debug.Log("EndGame true");
 			}
 		}
 		

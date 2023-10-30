@@ -2,14 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JellyShiftClone.Managers;
+using DG.Tweening;
 
 namespace JellyShiftClone.Controllers
 {
 	public class PlayerController : MonoBehaviour
 	{
 		public float forwardSpeed;
+		private Vector3 _initialPosition;
 		private bool _canMove;
 
+		private void OnEnable()
+		{
+			GameManager.OnGameStarted += OnGameStart;
+			GameManager.OnGameReset += OnGameReset;
+		}
+
+		private void OnDisable()
+		{
+			GameManager.OnGameStarted -= OnGameStart;
+			GameManager.OnGameReset -= OnGameReset;
+
+		}
 		public void Initialize()
 		{
 
@@ -19,13 +33,25 @@ namespace JellyShiftClone.Controllers
 
 		}
 
+		private void OnGameStart()
+		{
+			_initialPosition = transform.position;
+		}
+
+		private void OnGameReset()
+		{
+			DOVirtual.DelayedCall(1f, () =>
+			{
+				transform.position = _initialPosition;
+			});
+		}
 
 		void Update()
 		{
 			switch (GameManager.Instance.GameState)
 			{
 				case GameState.Start:
-					
+
 					break;
 				case GameState.Playing:
 					_canMove = true;
@@ -34,6 +60,7 @@ namespace JellyShiftClone.Controllers
 					_canMove = false;
 					break;
 				case GameState.Reset:
+					_canMove = false;
 					break;
 				default:
 					break;
@@ -51,7 +78,7 @@ namespace JellyShiftClone.Controllers
 			transform.position += transform.forward * forwardSpeed * Time.deltaTime;
 		}
 
-		
+
 
 	}
 }

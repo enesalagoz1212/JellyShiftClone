@@ -13,19 +13,32 @@ namespace JellyShiftClone.Canvases
         public void Initialize()
         {
             
+           
+
+        }
+
+		private void OnEnable()
+		{
+            GameManager.OnGameStarted += OnGameStart;
+            GameManager.OnGameReset += OnGameReset;
+		}
+
+		private void OnDisable()
+		{
+            GameManager.OnGameStarted -= OnGameStart;
+            GameManager.OnGameReset -= OnGameReset;
+			
+		}
+	
+        private void OnGameStart()
+		{
             playButton.onClick.AddListener(OnPlayButtonClick);
-
         }
 
-        void Start()
-        {
 
-        }
-
-        
-        void Update()
-        {
-
+        private void OnGameReset()
+		{
+            playButton.gameObject.SetActive(true);
         }
 
         private void OnPlayButtonClick()

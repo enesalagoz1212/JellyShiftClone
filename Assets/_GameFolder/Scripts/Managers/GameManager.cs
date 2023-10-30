@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using JellyShiftClone.Controllers;
+using DG.Tweening;
 
 namespace JellyShiftClone.Managers
 {
@@ -63,13 +64,25 @@ namespace JellyShiftClone.Managers
 
 		public void ResetGame()
 		{
+			ChangeState(GameState.Reset);
+			Debug.Log("ResetGame calisti");
+
+			DOVirtual.DelayedCall(1f, () =>
+			{
+				OnGameStart();
+			});
 
 		}
 
 		public void EndGame(bool isSuccessful)
 		{
 			ChangeState(GameState.End);
-			
+			if (isSuccessful)
+			{
+				Debug.Log("333");
+				PlayerPrefsManager.CurrentLevel++;
+			}
+
 		}
 
 		public void ChangeState(GameState gameState, bool isSuccessful = false)
@@ -85,16 +98,11 @@ namespace JellyShiftClone.Managers
 				case GameState.Playing:
 					break;
 				case GameState.End:
-					if (isSuccessful)
-					{
-						PlayerPrefsManager.CurrentLevel++;
-					}
-					else
-					{
-
-					}
+					OnGameEnd?.Invoke(isSuccessful);
+					//ResetGame();
 					break;
 				case GameState.Reset:
+					OnGameReset?.Invoke();
 					break;
 				default:
 					break;

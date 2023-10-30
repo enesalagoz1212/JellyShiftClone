@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using JellyShiftClone.Managers;
 using JellyShiftClone.Controllers;
+using DG.Tweening;
 
 namespace JellyShiftClone.Controllers
 {
@@ -20,11 +21,15 @@ namespace JellyShiftClone.Controllers
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
+			GameManager.OnGameReset += OnGameReset;
+			GameManager.OnGameEnd += OnGameEnd;
 		}
 
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
+			GameManager.OnGameReset -= OnGameReset;
+			GameManager.OnGameEnd -= OnGameEnd;
 
 		}
 
@@ -43,10 +48,25 @@ namespace JellyShiftClone.Controllers
 			_initialScale = transform.localScale;
 		}
 
+		private void OnGameReset()
+		{
+
+		}
+
+		private void OnGameEnd(bool isSuccessful)
+		{
+			if (!isSuccessful)
+			{
+				transform.localScale = _initialScale;
+				Vector3 targetPosition = new Vector3(0, 0, 230);
+				FlyAndRotateToTarget(targetPosition);
+			}
+		}
+
 		public void ChangeScale(float deltaY)
 		{
 			if (InputManager.Instance.isInputEnabled)
-			{	
+			{
 				float newYScale = transform.localScale.y + deltaY * 0.01f;
 				float newXScale = transform.localScale.x - deltaY * 0.01f;
 
@@ -67,6 +87,40 @@ namespace JellyShiftClone.Controllers
 				Debug.Log("Obstacle temas oldu");
 			}
 		}
+
+		private bool isMoving = false; // Hareket kontrolü
+
+		private void FlyAndRotateToTarget(Vector3 targetPosition)
+		{
+			if (isMoving) // Eðer Player zaten hareket halindeyse iþlem yapma
+			{
+				return;
+			}
+
+			float rotationAngleX = 360f; // X ekseni etrafýnda 360 derece dönme
+
+			// Hedef pozisyonuna doðru ilerleme mesafesi
+			float forwardDistance = Vector3.Distance(transform.position, targetPosition);
+
+			isMoving = true; // Hareket baþladýðýnda kontrolü etkinleþtir
+
+			// Ýleriye doðru hareketi ve dönme animasyonunu ayný anda baþlat
+			transform.DOMove(targetPosition, 1f)
+				.SetEase(Ease.Linear) // Ýleriye doðru hareket animasyonu
+				.OnStart(() =>
+				{
+					transform.DORotate(new Vector3(rotationAngleX, 0, 0), 1f, RotateMode.FastBeyond360)
+						.SetEase(Ease.Linear) // Dönüþ animasyonu
+						.OnComplete(() =>
+						{
+					// Ýleriye doðru hareket ve dönüþ tamamlandýðýnda kontrolü devre dýþý býrak
+					isMoving = false;
+						});
+				});
+		}
+
+
+
 
 	}
 
