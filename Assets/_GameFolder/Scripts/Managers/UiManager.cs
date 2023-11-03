@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JellyShiftClone.Canvases;
+using JellyShiftClone.Controllers;
 
 namespace JellyShiftClone.Managers
 {
@@ -11,6 +12,8 @@ namespace JellyShiftClone.Managers
 
         [SerializeField] private InputCanvas inputCanvas;
         [SerializeField] private GameCanvas gameCanvas;
+        [SerializeField] private SettingsCanvas settingsCanvas;
+        [SerializeField] private EndCanvas endCanvas;
 
         private void Awake()
         {
@@ -23,10 +26,12 @@ namespace JellyShiftClone.Managers
                 Destroy(gameObject);
             }
         }
-        public void Initialize(InputManager inputManager)
+        public void Initialize(InputManager inputManager, LevelManager levelManager,PlayerController playerController)
 		{
             inputCanvas.Initialize(inputManager);
-            gameCanvas.Initialize();
+            gameCanvas.Initialize(levelManager,settingsCanvas,playerController);
+            settingsCanvas.Initialize();
+            endCanvas.Initialize();
         }
         void Start()
         {

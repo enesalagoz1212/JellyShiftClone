@@ -10,8 +10,15 @@ namespace JellyShiftClone.Controllers
 	{
 		public float forwardSpeed;
 		private Vector3 _initialPosition;
-		private bool _canMove;
 
+		private bool _canMove;
+		public bool CanMove
+		{
+			get { return _canMove; }
+			set { _canMove = value; }
+		}
+
+		public Transform childTransform;
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
@@ -40,10 +47,8 @@ namespace JellyShiftClone.Controllers
 
 		private void OnGameReset()
 		{
-			DOVirtual.DelayedCall(1f, () =>
-			{
 				transform.position = _initialPosition;
-			});
+		
 		}
 
 		void Update()
@@ -51,16 +56,16 @@ namespace JellyShiftClone.Controllers
 			switch (GameManager.Instance.GameState)
 			{
 				case GameState.Start:
-
+					CanMove = false;
 					break;
 				case GameState.Playing:
-					_canMove = true;
+					CanMove = true;
 					break;
 				case GameState.End:
-					_canMove = false;
+					CanMove = false;
 					break;
 				case GameState.Reset:
-					_canMove = false;
+					CanMove = false;
 					break;
 				default:
 					break;
@@ -71,6 +76,16 @@ namespace JellyShiftClone.Controllers
 				MoveForward();
 			}
 
+		}
+
+		public void TrueCanMove()
+		{
+			_canMove = true;
+		}
+
+		public void FalseCanMove()
+		{
+			_canMove = false;
 		}
 
 		private void MoveForward()

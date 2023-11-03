@@ -10,25 +10,37 @@ namespace JellyShiftClone.Controllers
         public Transform target;
         public Vector3 offset;
         public float lerpValue;
-        private bool _isGameSuccessful = false;
+        private bool _isFollowingPlayer = true;
+
 
 
         private void OnEnable()
         {
+            GameManager.OnGameStarted += OnGameStart;
             GameManager.OnGameEnd += OnGameEnd;
         }
         private void OnDisable()
         {
+            GameManager.OnGameStarted -= OnGameStart;
             GameManager.OnGameEnd -= OnGameEnd;
         }
 
+        private void OnGameStart()
+		{
+            _isFollowingPlayer = true;
+		}
+
         private void OnGameEnd(bool isSuccessful)
         {
-            _isGameSuccessful = isSuccessful;
+			if (!isSuccessful)
+			{
+                _isFollowingPlayer = false;
+			}
+            
         }
         private void LateUpdate()
 		{
-            if (!_isGameSuccessful)
+            if (_isFollowingPlayer)
             {
                 Vector3 pos = target.position + offset;
                 transform.position = Vector3.Lerp(transform.position, pos, lerpValue);

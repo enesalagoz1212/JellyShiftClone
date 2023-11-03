@@ -50,7 +50,7 @@ namespace JellyShiftClone.Controllers
 
 		private void OnGameReset()
 		{
-
+			transform.localScale = _initialScale;
 		}
 
 		private void OnGameEnd(bool isSuccessful)
@@ -88,33 +88,31 @@ namespace JellyShiftClone.Controllers
 			}
 		}
 
-		private bool isMoving = false; // Hareket kontrolü
+		private bool isMoving = false;
 
 		private void FlyAndRotateToTarget(Vector3 targetPosition)
 		{
-			if (isMoving) // Eðer Player zaten hareket halindeyse iþlem yapma
+			if (isMoving)
 			{
 				return;
 			}
 
-			float rotationAngleX = 360f; // X ekseni etrafýnda 360 derece dönme
+			float rotationAngleX = 360f;
 
-			// Hedef pozisyonuna doðru ilerleme mesafesi
 			float forwardDistance = Vector3.Distance(transform.position, targetPosition);
 
-			isMoving = true; // Hareket baþladýðýnda kontrolü etkinleþtir
+			isMoving = true;
 
-			// Ýleriye doðru hareketi ve dönme animasyonunu ayný anda baþlat
 			transform.DOMove(targetPosition, 1f)
-				.SetEase(Ease.Linear) // Ýleriye doðru hareket animasyonu
+				.SetEase(Ease.Linear)
 				.OnStart(() =>
 				{
 					transform.DORotate(new Vector3(rotationAngleX, 0, 0), 1f, RotateMode.FastBeyond360)
-						.SetEase(Ease.Linear) // Dönüþ animasyonu
+						.SetEase(Ease.Linear)
 						.OnComplete(() =>
 						{
-					// Ýleriye doðru hareket ve dönüþ tamamlandýðýnda kontrolü devre dýþý býrak
-					isMoving = false;
+
+							isMoving = false;
 						});
 				});
 		}

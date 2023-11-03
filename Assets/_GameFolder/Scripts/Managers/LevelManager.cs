@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JellyShiftClone.Controllers;
 
 namespace JellyShiftClone.Managers
 {
@@ -8,14 +9,19 @@ namespace JellyShiftClone.Managers
 	{
 		public static LevelManager Instance { get; private set; }
 
+		private PlayerController _playerController;
+
 		public GameObject levels;
 		public GameObject[] levelPrefabs;
 
 		private GameObject currentLevel;
 		private int _currentLevelIndex;
-		public void Initialize()
-		{
 
+		private float _firstPlatformPositionZ = 17.7f;
+		private float _lastPlatformPositionZ = 210f;
+		public void Initialize(PlayerController playerController)
+		{
+			_playerController = playerController;
 		}
 
 		private void Awake()
@@ -73,6 +79,14 @@ namespace JellyShiftClone.Managers
 
 			GameObject nextLevelPrefab = levelPrefabs[_currentLevelIndex - 1];
 			currentLevel = Instantiate(nextLevelPrefab, levels.transform);
+		}
+
+		public float ReturnPlayerProgress()
+		{
+			Debug.Log("Return to player");
+			var top = (_playerController.childTransform.position.z - _firstPlatformPositionZ);
+			var bottom = (_lastPlatformPositionZ - _firstPlatformPositionZ);
+			return top / bottom;
 		}
 	}
 

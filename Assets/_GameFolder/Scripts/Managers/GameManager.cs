@@ -49,9 +49,9 @@ namespace JellyShiftClone.Managers
 
 		private void GameInitialize()
 		{
-			levelManager.Initialize();
+			levelManager.Initialize(playerController);
 			inputManager.Initialize(player);
-			uiManager.Initialize(inputManager);
+			uiManager.Initialize(inputManager, levelManager,playerController);
 			playerController.Initialize();
 			OnGameStart();
 		}
@@ -67,10 +67,9 @@ namespace JellyShiftClone.Managers
 			ChangeState(GameState.Reset);
 			Debug.Log("ResetGame calisti");
 
-			DOVirtual.DelayedCall(1f, () =>
-			{
-				OnGameStart();
-			});
+
+			OnGameStart();
+
 
 		}
 
