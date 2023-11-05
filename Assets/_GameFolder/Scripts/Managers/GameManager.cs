@@ -30,6 +30,8 @@ namespace JellyShiftClone.Managers
 		[SerializeField] private Player player;
 		[SerializeField] private UiManager uiManager;
 
+		private bool _isGameSuccessful;
+
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -71,10 +73,11 @@ namespace JellyShiftClone.Managers
 
 		public void EndGame(bool isSuccessful)
 		{
+			_isGameSuccessful = isSuccessful;
 			ChangeState(GameState.End);
 		}
 
-		public void ChangeState(GameState gameState, bool isSuccessful = false)
+		public void ChangeState(GameState gameState)
 		{
 			GameState = gameState;
 			Debug.Log($"GameState:{gameState}");
@@ -83,23 +86,22 @@ namespace JellyShiftClone.Managers
 			{
 				case GameState.Start:
 					OnGameStarted?.Invoke();
-					
 					break;
+				
 				case GameState.Playing:
 					break;
+				
 				case GameState.End:
-					OnGameEnd?.Invoke(isSuccessful);
-					if (!isSuccessful)
+					OnGameEnd?.Invoke(_isGameSuccessful);
+					if (_isGameSuccessful)
 					{
-						Debug.Log("GameManager bak");
 						IncreaseDiamondScore(3);
 						PlayerPrefsManager.CurrentLevel++;
 					}
 					break;
+				
 				case GameState.Reset:
 					OnGameReset?.Invoke();
-					break;
-				default:
 					break;
 			}
 		}

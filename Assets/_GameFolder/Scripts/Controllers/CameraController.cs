@@ -32,7 +32,7 @@ namespace JellyShiftClone.Controllers
 
         private void OnGameEnd(bool isSuccessful)
         {
-			if (!isSuccessful)
+			if (isSuccessful)
 			{
                 _isFollowingPlayer = false;
 			}

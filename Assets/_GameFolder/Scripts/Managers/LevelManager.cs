@@ -83,7 +83,6 @@ namespace JellyShiftClone.Managers
 
 		public float ReturnPlayerProgress()
 		{
-			Debug.Log("Return to player");
 			var top = (_playerController.childTransform.position.z - _firstPlatformPositionZ);
 			var bottom = (_lastPlatformPositionZ - _firstPlatformPositionZ);
 			return top / bottom;

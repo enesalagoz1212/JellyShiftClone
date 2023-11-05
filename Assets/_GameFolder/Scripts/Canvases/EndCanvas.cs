@@ -32,7 +32,7 @@ namespace JellyShiftClone.Canvases
 		private void OnGameEnd(bool isSuccessful)
 		{
 			Debug.Log("111");
-			if (!isSuccessful)
+			if (isSuccessful)
 			{
 				Debug.Log("222");
 				endPanel.SetActive(true);

@@ -35,10 +35,6 @@ namespace JellyShiftClone.Controllers
 		{
 
 		}
-		void Start()
-		{
-
-		}
 
 		private void OnGameStart()
 		{
@@ -78,23 +74,9 @@ namespace JellyShiftClone.Controllers
 
 		}
 
-		public void TrueCanMove()
-		{
-			_canMove = true;
-		}
-
-		public void FalseCanMove()
-		{
-			_canMove = false;
-		}
-
 		private void MoveForward()
 		{
 			transform.position += transform.forward * forwardSpeed * Time.deltaTime;
 		}
-
-
-
 	}
 }
-

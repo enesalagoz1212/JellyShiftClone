@@ -53,7 +53,7 @@ namespace JellyShiftClone.Controllers
 
 		private void OnGameEnd(bool isSuccessful)
 		{
-			if (!isSuccessful)
+			if (isSuccessful)
 			{
 				transform.localScale = _initialScale;
 				Vector3 targetPosition = new Vector3(0, 0, 220);
@@ -89,7 +89,10 @@ namespace JellyShiftClone.Controllers
 
 				transform.DOMove(bounceBackPosition, bounceBackDuration).SetEase(Ease.InOutQuad).OnComplete(() =>
 				{
-					isBouncing = false;
+					DOVirtual.DelayedCall(0.2f, () =>
+					{
+						isBouncing = false;
+					});
 				});
 			}
 		}

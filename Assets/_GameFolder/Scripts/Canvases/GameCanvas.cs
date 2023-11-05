@@ -86,7 +86,7 @@ namespace JellyShiftClone.Canvases
 
         private void OnGameEnd(bool isSuccessful)
 		{
-			if (!isSuccessful)
+			if (isSuccessful)
 			{
                 sliderImage.gameObject.SetActive(false);
                 pauseButton.gameObject.SetActive(false);
