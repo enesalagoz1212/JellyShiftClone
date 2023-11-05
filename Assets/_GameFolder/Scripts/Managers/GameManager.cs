@@ -22,6 +22,7 @@ namespace JellyShiftClone.Managers
 		public static Action OnGameStarted;
 		public static Action<bool> OnGameEnd;
 		public static Action OnGameReset;
+		public static Action<int> OnDiamondScored;
 
 		[SerializeField] private InputManager inputManager;
 		[SerializeField] private PlayerController playerController;
@@ -65,23 +66,12 @@ namespace JellyShiftClone.Managers
 		public void ResetGame()
 		{
 			ChangeState(GameState.Reset);
-			Debug.Log("ResetGame calisti");
-
-
 			OnGameStart();
-
-
 		}
 
 		public void EndGame(bool isSuccessful)
 		{
 			ChangeState(GameState.End);
-			if (isSuccessful)
-			{
-				Debug.Log("333");
-				PlayerPrefsManager.CurrentLevel++;
-			}
-
 		}
 
 		public void ChangeState(GameState gameState, bool isSuccessful = false)
@@ -93,12 +83,18 @@ namespace JellyShiftClone.Managers
 			{
 				case GameState.Start:
 					OnGameStarted?.Invoke();
+					
 					break;
 				case GameState.Playing:
 					break;
 				case GameState.End:
 					OnGameEnd?.Invoke(isSuccessful);
-					//ResetGame();
+					if (!isSuccessful)
+					{
+						Debug.Log("GameManager bak");
+						IncreaseDiamondScore(3);
+						PlayerPrefsManager.CurrentLevel++;
+					}
 					break;
 				case GameState.Reset:
 					OnGameReset?.Invoke();
@@ -106,6 +102,12 @@ namespace JellyShiftClone.Managers
 				default:
 					break;
 			}
+		}
+
+		public void IncreaseDiamondScore(int score)
+		{
+			PlayerPrefsManager.DiamondScore += score;
+			OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
 		}
 	}
 }

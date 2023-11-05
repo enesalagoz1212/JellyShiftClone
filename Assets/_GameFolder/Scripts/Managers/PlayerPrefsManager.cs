@@ -7,6 +7,7 @@ namespace JellyShiftClone.Managers
 	public class PlayerPrefsManager
 	{
 		private const string CurrentLevelKey = "CurrentLevel";
+		private const string DiamondScorePrefsString = "DiamondScore";
 		private const string HapticKey = "IsHapticOn";
 		private const string SoundKey = "IsSoundOn";
 		public static int CurrentLevel
@@ -18,6 +19,19 @@ namespace JellyShiftClone.Managers
 			set
 			{
 				PlayerPrefs.SetInt(CurrentLevelKey, value);
+			}
+		}
+
+
+		public static int DiamondScore
+		{
+			get
+			{
+				return PlayerPrefs.GetInt(DiamondScorePrefsString);
+			}
+			set
+			{
+				PlayerPrefs.SetInt(DiamondScorePrefsString, value);
 			}
 		}
 

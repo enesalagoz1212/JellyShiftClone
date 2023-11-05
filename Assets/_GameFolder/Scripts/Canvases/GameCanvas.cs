@@ -16,7 +16,9 @@ namespace JellyShiftClone.Canvases
 
         [SerializeField] private Image sliderImage;
         [SerializeField] private Image levelsImage;
+        [SerializeField] private Image diamondImage;
         [SerializeField] private TextMeshProUGUI levelText;
+        [SerializeField] private TextMeshProUGUI diamondScoreText;
 
         public RectTransform fullImage;
         public Button playButton;
@@ -45,13 +47,16 @@ namespace JellyShiftClone.Canvases
             GameManager.OnGameStarted += OnGameStart;
             GameManager.OnGameReset += OnGameReset;
             GameManager.OnGameEnd += OnGameEnd;
-		}
+            GameManager.OnDiamondScored += OnDiamondScore;
+
+        }
 
 		private void OnDisable()
 		{
             GameManager.OnGameStarted -= OnGameStart;
             GameManager.OnGameReset -= OnGameReset;
             GameManager.OnGameEnd -= OnGameEnd;
+            GameManager.OnDiamondScored -= OnDiamondScore;
 			
 		}
 	
@@ -68,8 +73,9 @@ namespace JellyShiftClone.Canvases
             UpdateLevelText();
             settingsButton.gameObject.SetActive(true);
             pauseButton.gameObject.SetActive(false);
-
+            diamondImage.gameObject.SetActive(true);
             Time.timeScale = 1;
+            OnDiamondScore(PlayerPrefsManager.DiamondScore);
         }
 
 
@@ -136,6 +142,13 @@ namespace JellyShiftClone.Canvases
             int currentLevel = PlayerPrefsManager.CurrentLevel;
             levelText.text = "LEVEL " + currentLevel.ToString();
         }
+
+        private void OnDiamondScore(int score)
+		{
+            diamondScoreText.text = " " + PlayerPrefsManager.DiamondScore.ToString();
+		}
+
+      
 
         private void Update()
         {

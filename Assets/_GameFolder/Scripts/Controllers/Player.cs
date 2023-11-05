@@ -18,6 +18,9 @@ namespace JellyShiftClone.Controllers
 		public float minY;
 		public float maxY;
 
+
+		private bool isMoving = false;
+		private bool isBouncing = false;
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
@@ -35,12 +38,7 @@ namespace JellyShiftClone.Controllers
 
 		private void Start()
 		{
-			_camera = Camera.main;
-
-			if (_camera == null)
-			{
-				Debug.LogError("Camera null");
-			}
+			
 		}
 
 		private void OnGameStart()
@@ -58,7 +56,7 @@ namespace JellyShiftClone.Controllers
 			if (!isSuccessful)
 			{
 				transform.localScale = _initialScale;
-				Vector3 targetPosition = new Vector3(0, 0, 230);
+				Vector3 targetPosition = new Vector3(0, 0, 220);
 				FlyAndRotateToTarget(targetPosition);
 			}
 		}
@@ -82,13 +80,20 @@ namespace JellyShiftClone.Controllers
 
 		private void OnCollisionEnter(Collision collision)
 		{
-			if (collision.gameObject.CompareTag("Obstacle"))
+			if (collision.gameObject.CompareTag("Obstacle") && !isBouncing)
 			{
-				Debug.Log("Obstacle temas oldu");
+				isBouncing = true;
+				Vector3 originalPosition = transform.position;
+				Vector3 bounceBackPosition = new Vector3(originalPosition.x, originalPosition.y, originalPosition.z - 6f);
+				float bounceBackDuration = 0.2f;
+
+				transform.DOMove(bounceBackPosition, bounceBackDuration).SetEase(Ease.InOutQuad).OnComplete(() =>
+				{
+					isBouncing = false;
+				});
 			}
 		}
 
-		private bool isMoving = false;
 
 		private void FlyAndRotateToTarget(Vector3 targetPosition)
 		{

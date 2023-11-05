@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using JellyShiftClone.Managers;
 using UnityEngine.UI;
+using TMPro;
 
 namespace JellyShiftClone.Canvases
 {
@@ -11,6 +12,7 @@ namespace JellyShiftClone.Canvases
 
 		public GameObject endPanel;
 		public Button nextButton;
+
 		public void Initialize()
 		{
 
@@ -44,6 +46,7 @@ namespace JellyShiftClone.Canvases
 			GameManager.Instance.ResetGame();
 		}
 
+		
 	}
 
 }
