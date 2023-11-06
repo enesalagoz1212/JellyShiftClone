@@ -26,10 +26,10 @@ namespace JellyShiftClone.Managers
                 Destroy(gameObject);
             }
         }
-        public void Initialize(InputManager inputManager, LevelManager levelManager,PlayerController playerController)
+        public void Initialize(InputManager inputManager, LevelManager levelManager,PlayerMovementController playerMovementController)
 		{
             inputCanvas.Initialize(inputManager);
-            gameCanvas.Initialize(levelManager,settingsCanvas,playerController);
+            gameCanvas.Initialize(levelManager,settingsCanvas,playerMovementController);
             settingsCanvas.Initialize();
             endCanvas.Initialize();
         }

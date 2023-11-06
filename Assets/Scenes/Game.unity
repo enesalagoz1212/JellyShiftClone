@@ -706,6 +706,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac556586fb8d5eb4dbdc1a189abcd571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &127320084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 127320085}
+  m_Layer: 0
+  m_Name: LevelScriptableObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &127320085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127320084}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1673276270}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &178257646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,7 +1353,7 @@ Camera:
     height: 1
   near clip plane: 0.03
   far clip plane: 1000
-  field of view: 57.5
+  field of view: 68.1
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1347,14 +1378,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.06035923, y: -0.09124655, z: 0.005540917, w: 0.99398196}
-  m_LocalPosition: {x: 7.29, y: 10.9, z: -19.37}
+  m_LocalRotation: {x: 0.03788176, y: -0.059510686, z: 0.007928388, w: 0.9974771}
+  m_LocalPosition: {x: 4.7, y: 8.2, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1673276270}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 6.95, y: -10.49, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.388, y: -6.804, z: 0.65}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1401,7 +1432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1366806202}
-  offset: {x: 3.54, y: 9.1, z: -19.37}
+  offset: {x: 4.7, y: 8.2, z: -21}
   lerpValue: 4
 --- !u!1 &349144275
 GameObject:
@@ -2765,12 +2796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73819c67c80958e4b9f837785da20f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelData: {fileID: 11400000, guid: 49cecf8e010091342b8683ba7c680246, type: 2}
   levels: {fileID: 988364666}
-  levelPrefabs:
-  - {fileID: 2131587929806958278, guid: 23410e282a18d434fa1917e3a054ccb2, type: 3}
-  - {fileID: 2131587929806958278, guid: 58585517cff716343a673b648339ea29, type: 3}
-  - {fileID: 2131587929806958278, guid: 3ad121aa3335fe547aacd2d9f3c4537c, type: 3}
-  - {fileID: 2131587929806958278, guid: c39870b94e661fd44a6cb618b3d7fcbd, type: 3}
 --- !u!1 &843017417
 GameObject:
   m_ObjectHideFlags: 0
@@ -4030,7 +4057,7 @@ GameObject:
   - component: {fileID: 1366806204}
   - component: {fileID: 1366806205}
   m_Layer: 0
-  m_Name: PlayerController
+  m_Name: PlayerMovementController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4064,7 +4091,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87597a31502ef2a4cbeac6229fbf0957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 25
+  forwardSpeed: 15
+  lerpValue: 1
+  minX: 0.4
+  maxX: 3
+  minY: 0.4
+  maxY: 3
   childTransform: {fileID: 384885885}
 --- !u!114 &1366806204
 MonoBehaviour:
@@ -4078,11 +4110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6579a8b0433a0a4e958d92e80de758c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpValue: 5
-  minX: 0.4
-  maxX: 3
-  minY: 0.4
-  maxY: 3
 --- !u!54 &1366806205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4952,6 +4979,7 @@ Transform:
   - {fileID: 843017418}
   - {fileID: 410087041}
   - {fileID: 330585546}
+  - {fileID: 127320085}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4968,7 +4996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 1434470347}
-  playerController: {fileID: 1366806203}
+  playerMovementController: {fileID: 1366806203}
   levelManager: {fileID: 819646114}
   player: {fileID: 1366806204}
   uiManager: {fileID: 349144277}
@@ -5880,14 +5908,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.41960785}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: da0f2e63b21d9af4b800377de39c5e27, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62d02685314d2434a966f96c3aca8300, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -25,7 +25,7 @@ namespace JellyShiftClone.Managers
 		public static Action<int> OnDiamondScored;
 
 		[SerializeField] private InputManager inputManager;
-		[SerializeField] private PlayerController playerController;
+		[SerializeField] private PlayerMovementController playerMovementController;
 		[SerializeField] private LevelManager levelManager;
 		[SerializeField] private Player player;
 		[SerializeField] private UiManager uiManager;
@@ -52,10 +52,10 @@ namespace JellyShiftClone.Managers
 
 		private void GameInitialize()
 		{
-			levelManager.Initialize(playerController);
-			inputManager.Initialize(player);
-			uiManager.Initialize(inputManager, levelManager,playerController);
-			playerController.Initialize();
+			levelManager.Initialize(playerMovementController);
+			inputManager.Initialize(playerMovementController);
+			uiManager.Initialize(inputManager, levelManager, playerMovementController);
+			playerMovementController.Initialize();
 			OnGameStart();
 		}
 

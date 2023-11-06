@@ -12,7 +12,7 @@ namespace JellyShiftClone.Canvases
     {
         private LevelManager _levelManager;
         private SettingsCanvas _settingsCanvas;
-        private PlayerController _playerController;
+        private PlayerMovementController _playerMovementController;
 
         [SerializeField] private Image sliderImage;
         [SerializeField] private Image levelsImage;
@@ -30,11 +30,11 @@ namespace JellyShiftClone.Canvases
         public float startX = -213f; 
         public float endX = 236f;
 
-        public void Initialize(LevelManager levelManager,SettingsCanvas settingsCanvas,PlayerController playerController)
+        public void Initialize(LevelManager levelManager,SettingsCanvas settingsCanvas,PlayerMovementController playerController)
         {
             _levelManager = levelManager;
             _settingsCanvas = settingsCanvas;
-            _playerController = playerController;
+            _playerMovementController = playerController;
 
             settingsButton.onClick.AddListener(OnSettingsButtonClicked);
             pauseButton.onClick.AddListener(OnPausedButton);

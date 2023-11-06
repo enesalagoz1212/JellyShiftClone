@@ -12,7 +12,7 @@ namespace JellyShiftClone.Managers
 		public static InputManager Instance { get; private set; }
 		public bool isInputEnabled { get; private set; } = true;
 
-		private Player _player;
+		private PlayerMovementController _playerMovementController;
 
 		private float _firstTouchY;
 		private bool _isDragging;
@@ -29,9 +29,9 @@ namespace JellyShiftClone.Managers
 
 		}
 
-		public void Initialize(Player player)
+		public void Initialize(PlayerMovementController playerMovementController)
 		{
-			_player = player;
+			_playerMovementController = playerMovementController;
 			_isDragging = false;
 		}
 		public void OnScreenTouch(PointerEventData eventData)
@@ -59,7 +59,7 @@ namespace JellyShiftClone.Managers
 			float deltaY = _firstTouchY - _lastTouchY;
 
 			_firstTouchY = _lastTouchY;
-			_player.ChangeScale(deltaY);
+			_playerMovementController.ChangeScale(deltaY);
 		}
 
 

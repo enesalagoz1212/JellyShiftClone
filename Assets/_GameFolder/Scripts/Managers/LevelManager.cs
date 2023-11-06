@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JellyShiftClone.Controllers;
+using JellyShiftClone.ScriptableObjects;
 
 namespace JellyShiftClone.Managers
 {
@@ -9,19 +10,16 @@ namespace JellyShiftClone.Managers
 	{
 		public static LevelManager Instance { get; private set; }
 
-		private PlayerController _playerController;
+		private PlayerMovementController _playerMovementController;
+		public LevelScriptableObject levelData;
+		private LevelScriptableObject _currentLevelData;
 
 		public GameObject levels;
-		public GameObject[] levelPrefabs;
-
 		private GameObject currentLevel;
-		private int _currentLevelIndex;
 
-		private float _firstPlatformPositionZ = 17.7f;
-		private float _lastPlatformPositionZ = 210f;
-		public void Initialize(PlayerController playerController)
+		public void Initialize(PlayerMovementController playerMovementController)
 		{
-			_playerController = playerController;
+			_playerMovementController = playerMovementController;
 		}
 
 		private void Awake()
@@ -34,6 +32,7 @@ namespace JellyShiftClone.Managers
 			{
 				Instance = this;
 			}
+			_currentLevelData= levelData;
 		}
 
 
@@ -62,6 +61,11 @@ namespace JellyShiftClone.Managers
 
 		}
 
+		public LevelScriptableObject GetLevelData()
+		{
+			return _currentLevelData;
+		}
+
 		public void CreateNextLevel()
 		{
 			if (currentLevel != null)
@@ -69,7 +73,7 @@ namespace JellyShiftClone.Managers
 				Destroy(currentLevel);
 			}
 
-			int levelPrefabsLength = levelPrefabs.Length;
+			int levelPrefabsLength = _currentLevelData.levelPrefabs.Length;
 			var _currentLevelIndex = (PlayerPrefsManager.CurrentLevel % levelPrefabsLength);
 
 			if (_currentLevelIndex == 0)
@@ -77,14 +81,14 @@ namespace JellyShiftClone.Managers
 				_currentLevelIndex = levelPrefabsLength;
 			}
 
-			GameObject nextLevelPrefab = levelPrefabs[_currentLevelIndex - 1];
+			GameObject nextLevelPrefab = _currentLevelData.levelPrefabs[_currentLevelIndex - 1];
 			currentLevel = Instantiate(nextLevelPrefab, levels.transform);
 		}
 
 		public float ReturnPlayerProgress()
 		{
-			var top = (_playerController.childTransform.position.z - _firstPlatformPositionZ);
-			var bottom = (_lastPlatformPositionZ - _firstPlatformPositionZ);
+			var top = (_playerMovementController.childTransform.position.z -_currentLevelData.playerStartTransform.z);
+			var bottom = (_currentLevelData.playerExitTransform.z - _currentLevelData.playerStartTransform.z);
 			return top / bottom;
 		}
 	}
