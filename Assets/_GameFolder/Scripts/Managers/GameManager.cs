@@ -95,6 +95,7 @@ namespace JellyShiftClone.Managers
 					OnGameEnd?.Invoke(_isGameSuccessful);
 					if (_isGameSuccessful)
 					{
+						Debug.Log("Oyun basarili");
 						IncreaseDiamondScore(3);
 						PlayerPrefsManager.CurrentLevel++;
 					}

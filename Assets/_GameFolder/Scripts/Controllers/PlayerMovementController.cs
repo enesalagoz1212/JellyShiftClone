@@ -8,36 +8,31 @@ namespace JellyShiftClone.Controllers
 {
 	public enum PlayerState
 	{
-		Idle,
-		forward,
-		hit,
-		Jumping,
-		Falling,
+		Idle = 0,
+		Forward = 1,
+		Hit = 2,
+		Jumping = 3,
+		Falling = 4,
 	}
 
 	public class PlayerMovementController : MonoBehaviour
 	{
+		public PlayerState PlayerState { get; set; }
+
+		public Ease rotationEaseType;
 		public float forwardSpeed;
 		private Vector3 _initialPosition;
-
-		private bool _canMove;
-		public bool CanMove
-		{
-			get { return _canMove; }
-			set { _canMove = value; }
-		}
-
 		private Vector3 _initialScale;
 
+		private bool _canMove = false;
 		public float lerpValue;
 		public float minX;
 		public float maxX;
 		public float minY;
 		public float maxY;
 
-
-		private bool isMoving = false;
 		private bool isBouncing = false;
+		private bool isJump = true;
 		public Transform childTransform;
 		private void OnEnable()
 		{
@@ -60,6 +55,9 @@ namespace JellyShiftClone.Controllers
 
 		private void OnGameStart()
 		{
+			isJump = true;
+			_canMove = true;
+
 			_initialPosition = transform.position;
 			_initialScale = transform.localScale;
 		}
@@ -67,7 +65,7 @@ namespace JellyShiftClone.Controllers
 		private void OnGameReset()
 		{
 			transform.position = _initialPosition;
-			
+
 		}
 
 		private void OnGameEnd(bool isSuccessful)
@@ -75,34 +73,43 @@ namespace JellyShiftClone.Controllers
 			if (isSuccessful)
 			{
 				transform.localScale = _initialScale;
+				ChangeState(PlayerState.Jumping);
 			}
 		}
 
-		void Update()
+		public void ChangeState(PlayerState playerState)
 		{
-			switch (GameManager.Instance.GameState)
+			PlayerState = playerState;
+			Debug.Log($"PlayerState: {playerState} ");
+
+			switch (playerState)
 			{
-				case GameState.Start:
-					CanMove = false;
+				case PlayerState.Idle:
 					break;
-				case GameState.Playing:
-					CanMove = true;
+				case PlayerState.Forward:
+					MoveForward();
 					break;
-				case GameState.End:
-					CanMove = false;
+				case PlayerState.Hit:
+					// obstacle leri carpma animasyonu ekle
 					break;
-				case GameState.Reset:
-					CanMove = false;
+				case PlayerState.Jumping:
+					// oyun sonu zýplama animasyonu
+					Rotate();
+					break;
+				case PlayerState.Falling:
+					// oyun esnasýnda harekt ederken yere düsme icin gerekli kisim
 					break;
 				default:
 					break;
 			}
+		}
 
-			if (_canMove)
+		private void Update()
+		{
+			if (GameManager.Instance.GameState == GameState.Playing && _canMove == true)
 			{
-				MoveForward();
+				ChangeState(PlayerState.Forward);
 			}
-
 		}
 
 		private void MoveForward()
@@ -126,11 +133,13 @@ namespace JellyShiftClone.Controllers
 				transform.localScale = new Vector3(newXScale, newYScale, transform.localScale.z);
 			}
 		}
-		
-		private void OnCollisionEnter(Collision collision)
+		private void OnTriggerEnter(Collider other)
 		{
-			if (collision.gameObject.CompareTag("Obstacle") && !isBouncing)
+
+			if (other.gameObject.CompareTag("Obstacle") && !isBouncing)
 			{
+				ChangeState(PlayerState.Hit);
+				_canMove = false;
 				isBouncing = true;
 				Vector3 originalPosition = transform.position;
 				Vector3 bounceBackPosition = new Vector3(originalPosition.x, originalPosition.y, originalPosition.z - 6f);
@@ -141,8 +150,33 @@ namespace JellyShiftClone.Controllers
 					DOVirtual.DelayedCall(0.2f, () =>
 					{
 						isBouncing = false;
+						_canMove = true;
+						ChangeState(PlayerState.Forward);
 					});
 				});
+			}
+		}
+
+		private void Rotate()
+		{
+
+			if (isJump)
+			{
+
+				Vector3 originalPosition = transform.position;
+				float duration = 1.5f;
+				float forwardDistance = 10f;
+				float rotationAmount = 360f;
+
+				transform.DOMoveZ(originalPosition.z + forwardDistance, duration).SetEase(rotationEaseType);
+
+				
+				float customRotationAmount = 180f;
+				transform.DORotate(new Vector3(customRotationAmount, 0f, 0f), duration, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+
+				isJump = false;
+		
+
 			}
 		}
 	}

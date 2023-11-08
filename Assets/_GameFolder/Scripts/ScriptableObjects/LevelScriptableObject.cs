@@ -8,11 +8,11 @@ namespace JellyShiftClone.ScriptableObjects
     public class LevelScriptableObject : ScriptableObject
     {
         [Header("Starting and Ending Positions")]
-        public Vector3 playerStartTransform; 
+        public Vector3 playerStartTransform;
         public Vector3 playerExitTransform;
 
         [Header("Level Prefabs")]
-        public GameObject[] levelPrefabs;
+        public GameObject levelPrefab;
     }
 }
 

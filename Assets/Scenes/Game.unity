@@ -2796,8 +2796,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73819c67c80958e4b9f837785da20f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 11400000, guid: 49cecf8e010091342b8683ba7c680246, type: 2}
-  levels: {fileID: 988364666}
+  levels:
+  - {fileID: 11400000, guid: 49cecf8e010091342b8683ba7c680246, type: 2}
+  - {fileID: 11400000, guid: 4019c4486f9dbec4b9c0bc84bf13486f, type: 2}
+  - {fileID: 11400000, guid: 2ea8380de32d9b14a8e2e5b05ac60f19, type: 2}
+  - {fileID: 11400000, guid: 271774f64fd62de44980566018283eea, type: 2}
+  levelContainer: {fileID: 988364666}
 --- !u!1 &843017417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3249,7 +3253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 988364667}
   m_Layer: 0
-  m_Name: Levels
+  m_Name: LevelContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4091,6 +4095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87597a31502ef2a4cbeac6229fbf0957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationEaseType: 7
   forwardSpeed: 15
   lerpValue: 1
   minX: 0.4

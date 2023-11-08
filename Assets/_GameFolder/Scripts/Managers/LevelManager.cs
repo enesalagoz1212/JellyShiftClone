@@ -11,10 +11,11 @@ namespace JellyShiftClone.Managers
 		public static LevelManager Instance { get; private set; }
 
 		private PlayerMovementController _playerMovementController;
-		public LevelScriptableObject levelData;
+		public LevelScriptableObject[] levels;
 		private LevelScriptableObject _currentLevelData;
+		private int _currentLevelIndex = 0;
 
-		public GameObject levels;
+		public GameObject levelContainer;
 		private GameObject currentLevel;
 
 		public void Initialize(PlayerMovementController playerMovementController)
@@ -32,7 +33,7 @@ namespace JellyShiftClone.Managers
 			{
 				Instance = this;
 			}
-			_currentLevelData= levelData;
+		
 		}
 
 
@@ -52,8 +53,16 @@ namespace JellyShiftClone.Managers
 
 		private void OnGameStart()
 		{
+			int currentLevelData = PlayerPrefsManager.CurrentLevel;
+			int moodCurrentLevel = currentLevelData % levels.Length;
+			if (moodCurrentLevel==0)
+			{
+				moodCurrentLevel = levels.Length;
+			}
+			_currentLevelData = levels[moodCurrentLevel-1];
+
 			CreateNextLevel();
-			levels.gameObject.SetActive(true);
+			levelContainer.gameObject.SetActive(true);
 		}
 
 		private void OnGameEnd(bool isSuccessful)
@@ -73,16 +82,18 @@ namespace JellyShiftClone.Managers
 				Destroy(currentLevel);
 			}
 
-			int levelPrefabsLength = _currentLevelData.levelPrefabs.Length;
-			var _currentLevelIndex = (PlayerPrefsManager.CurrentLevel % levelPrefabsLength);
+			int levelIndex = PlayerPrefsManager.CurrentLevel;
+			int mood = levelIndex % levels.Length;
 
-			if (_currentLevelIndex == 0)
+			if (mood==0)
 			{
-				_currentLevelIndex = levelPrefabsLength;
+				mood = levels.Length;
 			}
 
-			GameObject nextLevelPrefab = _currentLevelData.levelPrefabs[_currentLevelIndex - 1];
-			currentLevel = Instantiate(nextLevelPrefab, levels.transform);
+			LevelScriptableObject currentLevelData = levels[mood-1];
+			GameObject nextLevelPrefab = currentLevelData.levelPrefab;
+			currentLevel = Instantiate(nextLevelPrefab, levelContainer.transform);
+
 		}
 
 		public float ReturnPlayerProgress()
@@ -90,6 +101,7 @@ namespace JellyShiftClone.Managers
 			var top = (_playerMovementController.childTransform.position.z -_currentLevelData.playerStartTransform.z);
 			var bottom = (_currentLevelData.playerExitTransform.z - _currentLevelData.playerStartTransform.z);
 			return top / bottom;
+			
 		}
 	}
 
