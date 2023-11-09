@@ -74,6 +74,7 @@ namespace JellyShiftClone.Controllers
 			{
 				transform.localScale = _initialScale;
 				ChangeState(PlayerState.Jumping);
+				isJump = true;
 			}
 		}
 
@@ -159,24 +160,25 @@ namespace JellyShiftClone.Controllers
 
 		private void Rotate()
 		{
-
 			if (isJump)
 			{
-
 				Vector3 originalPosition = transform.position;
-				float duration = 1.5f;
+				float duration = 2f;
 				float forwardDistance = 10f;
-				float rotationAmount = 360f;
+				float upwardDistance = 3f;
+				float rotationAmountX = 360f;
 
-				transform.DOMoveZ(originalPosition.z + forwardDistance, duration).SetEase(rotationEaseType);
+				transform.DOMoveZ(originalPosition.z + forwardDistance, duration).SetEase(Ease.Linear);
+				transform.DOMoveY(originalPosition.y + upwardDistance, duration / 3).SetEase(Ease.Linear).OnComplete(() =>
+				   {
+					   transform.DORotate(new Vector3(rotationAmountX, 0f, 0f), duration / 5, RotateMode.FastBeyond360).SetEase(rotationEaseType);
 
-				
-				float customRotationAmount = 180f;
-				transform.DORotate(new Vector3(customRotationAmount, 0f, 0f), duration, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+					   transform.DOMoveY(originalPosition.y, duration / 6).SetEase(Ease.Linear).OnComplete(() =>
+					  {
+						  isJump = false;
+					  });
 
-				isJump = false;
-		
-
+				   });
 			}
 		}
 	}
