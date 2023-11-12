@@ -60,6 +60,8 @@ namespace JellyShiftClone.Controllers
 
 			_initialPosition = transform.position;
 			_initialScale = transform.localScale;
+
+			ChangeState(PlayerState.Idle);
 		}
 
 		private void OnGameReset()
@@ -88,14 +90,13 @@ namespace JellyShiftClone.Controllers
 				case PlayerState.Idle:
 					break;
 				case PlayerState.Forward:
-					MoveForward();
 					break;
 				case PlayerState.Hit:
 					// obstacle leri carpma animasyonu ekle
 					break;
 				case PlayerState.Jumping:
-					// oyun sonu zýplama animasyonu
-					Rotate();
+					// oyun sonu zýplama animasyonu		
+					 Rotate();			
 					break;
 				case PlayerState.Falling:
 					// oyun esnasýnda harekt ederken yere düsme icin gerekli kisim
@@ -107,9 +108,26 @@ namespace JellyShiftClone.Controllers
 
 		private void Update()
 		{
-			if (GameManager.Instance.GameState == GameState.Playing && _canMove == true)
+			switch (PlayerState)
 			{
-				ChangeState(PlayerState.Forward);
+				case PlayerState.Idle:
+					if (GameManager.Instance.GameState == GameState.Playing && _canMove == true)
+					{
+						ChangeState(PlayerState.Forward);
+					}
+					break;
+				case PlayerState.Forward:
+					MoveForward();
+					break;
+				case PlayerState.Hit:
+					break;
+				case PlayerState.Jumping:
+					
+					break;
+				case PlayerState.Falling:
+					break;
+				default:
+					break;
 			}
 		}
 

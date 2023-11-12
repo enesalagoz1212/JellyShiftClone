@@ -947,6 +947,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerCopy
       objectReference: {fileID: 0}
+    - target: {fileID: 3065260170985134564, guid: 335253fd70c7e304ab00f87189977cfc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3065260170985134567, guid: 335253fd70c7e304ab00f87189977cfc,
         type: 3}
       propertyPath: m_RootOrder
@@ -1662,7 +1667,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384885881}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -3361,6 +3366,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 8602129379405793001, guid: d61deb5c565503c43b69ba9081a29593,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8602129379405793002, guid: d61deb5c565503c43b69ba9081a29593,
         type: 3}
       propertyPath: m_RootOrder
@@ -4250,7 +4260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87597a31502ef2a4cbeac6229fbf0957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationEaseType: 5
+  rotationEaseType: 1
   forwardSpeed: 15
   lerpValue: 1
   minX: 0.4
@@ -6383,3 +6393,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3a1dd46bdc3a14fa75062f11a48386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCopy: {fileID: 0}

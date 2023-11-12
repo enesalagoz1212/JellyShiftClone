@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Ground
   - Obstacle
+  - Collider
+  - Collider1
+  - Collider2
+  - Collider3
+  - Collider4
   layers:
   - Default
   - TransparentFX
